@@ -1,0 +1,4 @@
+DATASOURCE_URL: jdbc:postgresql://localhost:5432/zenwave
+DATASOURCE_USERNAME: zenwave
+DATASOURCE_PASSWORD:
+KAFKA_BOOTSTRAP_SERVERS: localhost:9092
