@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "version": 0,
+  "username": "username@example.com",
+  "email": "username",
+  "address": {
+    "id": 1,
+    "version": 0,
+    "street": "13, Rue del Percebe",
+    "city": "Borricon de Arriba",
+    "state": "",
+    "zip": "",
+    "type": "HOME"
+  }
+}

@@ -2,10 +2,16 @@ config {
     title "ZenWave Playground Customer-Address JPA"
     basePackage "io.zenwave360.example"
     persistence jpa
-    databaseType postgres
+    databaseType postgresql
 //    haltOnFailFormatting false
-    specFile "customer-address-relational-one-to-many.zdl"
+    specFile "customer-address-relational-one-to-one.zdl"
     targetFolder "hexagonal"
+
+    // these should match the values of openapi-generator-maven-plugin
+    // used by the OpenAPIControllersPlugin and SpringWebTestClientPlugin
+    openApiApiPackage "{{basePackage}}.adapters.web"
+    openApiModelPackage "{{basePackage}}.adapters.web.model"
+    openApiModelNameSuffix DTO
 
     plugins {
 
@@ -25,17 +31,23 @@ config {
         BackendApplicationDefaultPlugin {
             useLombok true
             includeEmitEventsImplementation true
-            // --force // overwite all files
+            --force // overwite all files
         }
 
         OpenAPIControllersPlugin {
-            formatter google // comments in one line are better for demos
             openapiFile "hexagonal/src/main/resources/apis/openapi.yml"
+            zdlFile "customer-address-relational-one-to-one.zdl"
+        }
 
-            // thse should match the values of openapi-generator-maven-plugin
-            openApiApiPackage "{{basePackage}}.adapters.web"
-            openApiModelPackage "{{basePackage}}.adapters.web.model"
-            openApiModelNameSuffix DTO
+        SpringWebTestClientPlugin {
+            openapiFile "hexagonal/src/main/resources/apis/openapi.yml"
+        }
+
+        SpringWebTestClientPlugin {
+            openapiFile "hexagonal/src/main/resources/apis/openapi.yml"
+            groupBy businessFlow
+            businessFlowTestName CreateUpdateDeleteCustomerIntegrationTest
+            operationIds createCustomer,updateCustomer,deleteCustomer,getCustomer
         }
     }
 }

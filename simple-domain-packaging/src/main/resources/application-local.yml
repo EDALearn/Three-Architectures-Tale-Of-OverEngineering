@@ -1,3 +1,5 @@
+logging.level.org.hibernate.SQL: DEBUG
+
 DATASOURCE_URL: jdbc:postgresql://localhost:5432/zenwave
 DATASOURCE_USERNAME: zenwave
 DATASOURCE_PASSWORD:

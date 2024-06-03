@@ -1,1 +1,14 @@
-MONGODB_URI: mongodb://localhost:27017/customers
+logging.level.org.hibernate.SQL: DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+logging.level.org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+logging.level.org.springframework.transaction: DEBUG
+logging.level.org.apache.kafka.clients.admin: WARN
+
+spring.jpa.hibernate.ddl-auto: create
+spring.jpa.defer-datasource-initialization: true
+spring.sql.init.mode: always
+
+DATASOURCE_URL: jdbc:postgresql://localhost:5432/zenwave
+DATASOURCE_USERNAME: zenwave
+DATASOURCE_PASSWORD:
+KAFKA_BOOTSTRAP_SERVERS: localhost:9092

@@ -1,0 +1,58 @@
+config {
+    title "ZenWave Playground Customer-Address JPA"
+    basePackage "io.zenwave360.example"
+    persistence jpa
+    databaseType postgresql
+    multiModule true
+    mavenModulesPrefix "customer-address"
+//    haltOnFailFormatting false
+    specFile "customer-address-relational-one-to-one.zdl"
+    targetFolder "hexagonal-with-maven-modules"
+
+    // these should match the values of openapi-generator-maven-plugin
+    // used by the OpenAPIControllersPlugin and SpringWebTestClientPlugin
+    openApiApiPackage "{{basePackage}}.adapters.web"
+    openApiModelPackage "{{basePackage}}.adapters.web.model"
+    openApiModelNameSuffix DTO
+
+    plugins {
+
+        ZDLToOpenAPIPlugin {
+            idType integer
+            idTypeFormat int64
+            targetFile "customer-address-adapters-web/src/main/resources/apis/openapi.yml"
+        }
+
+        ZDLToAsyncAPIPlugin {
+            asyncapiVersion v3
+            idType integer
+            idTypeFormat int64
+            targetFile "customer-address-core-impl/src/main/resources/apis/asyncapi.yml"
+        }
+
+        BackendApplicationDefaultPlugin {
+            useLombok true
+            includeEmitEventsImplementation true
+            --force // overwite all files
+        }
+
+        OpenAPIControllersPlugin {
+            openapiFile "hexagonal-with-maven-modules/customer-address-adapters-web/src/main/resources/apis/openapi.yml"
+            zdlFile "customer-address-relational-one-to-one.zdl"
+            targetFolder "hexagonal-with-maven-modules/customer-address-adapters-web"
+        }
+
+        SpringWebTestClientPlugin {
+            openapiFile "hexagonal-with-maven-modules/customer-address-adapters-web/src/main/resources/apis/openapi.yml"
+            targetFolder "hexagonal-with-maven-modules/customer-address-adapters-web"
+        }
+
+        SpringWebTestClientPlugin {
+            openapiFile "hexagonal-with-maven-modules/customer-address-adapters-web/src/main/resources/apis/openapi.yml"
+            groupBy businessFlow
+            businessFlowTestName CreateUpdateDeleteCustomerIntegrationTest
+            operationIds createCustomer,updateCustomer,deleteCustomer,getCustomer
+            targetFolder "hexagonal-with-maven-modules/customer-address-adapters-web"
+        }
+    }
+}

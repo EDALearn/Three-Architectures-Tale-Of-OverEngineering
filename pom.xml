@@ -9,7 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>hexagonal</module>
         <module>simple-domain-packaging</module>
+        <module>hexagonal</module>
+        <module>hexagonal-with-maven-modules</module>
     </modules>
 </project>

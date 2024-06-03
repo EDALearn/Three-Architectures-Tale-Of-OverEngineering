@@ -1,0 +1,46 @@
+### List Customers
+GET {{baseUrl}}/customers
+Authorization: {{Authorization}}
+Content-Type: application/json
+
+### Create Customer
+< {%
+    request.variables.set("suffix", $random.integer(10, 1000))
+%}
+POST {{baseUrl}}/customers
+Authorization: {{Authorization}}
+Content-Type: application/json
+
+{
+    "username": "ivangsa{{suffix}}",
+    "firstName": "Ivan",
+    "lastName": "Garcia Sainz-Aja",
+    "email": "ivangsa{{suffix}}@domain.com",
+    "phone": "(505) 503-4455",
+    "address": {
+        "identifier": "Home Address",
+        "street": "Rue del Percebe, 13",
+        "city": "Madrid",
+        "state": "Madrid",
+        "zip": "28001",
+        "type": "WORK"
+    }
+}
+
+
+###
+< {%
+    request.variables.set("customerId", "1")
+%}
+PUT http://localhost:8080/api/customers/{{customerId}}/address
+Authorization: {{Authorization}}
+Content-Type: application/json
+
+{
+  "identifier": "Home Address",
+  "street": "Rue del Percebe, 13",
+  "city": "Madrid (updated)",
+  "state": "Madrid (updated)",
+  "zip": "28001",
+  "type": "HOME"
+}
